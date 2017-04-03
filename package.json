@@ -1,0 +1,29 @@
+{
+  "name": "webpack_starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "watch": "webpack --watch",
+    "server": "nodemon server.js",
+    "dev": "start npm run watch && start npm run server"
+  },
+  "author": "@VictorSheep",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "jquery": "^3.2.1",
+    "live-server": "^1.1.0",
+    "node-libs-browser": "^1.0.0",
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "fast-csv": "^2.4.0",
+    "mongoose": "^4.9.2",
+    "nodemon": "^1.11.0"
+  }
+}

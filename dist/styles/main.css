@@ -1,0 +1,37 @@
+/* Feuille de style de index.html */
+/*
+thème = http://www.colourlovers.com/palette/4470979/manamilazy?widths=1
+	manimal:	#C33113		rgb(195,49,19);
+	glow:		#AE5511		rgb(174,85,17);
+	manimosity:	#867323		rgb(134,115,35);
+	55855A:		#55855A		rgb(85,133,90);
+	mananarama:	#1DA49C		rgb(29,164,156);
+
+ */
+
+body{
+	margin: 0; padding: 0;
+	/* overflow: hidden; */
+	font-family: sans-serif;
+}
+body>*{
+	display: flex;
+	flex-direction: column;
+}
+body>*>*{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+#app{
+	width: 98vw;
+	max-width: 600px;
+	height: 90vh;
+	min-height: 700px;
+	margin: 0 auto;
+	background-color: #F0F0F0;
+}
+
+.hidden{
+	display: none;
+}
