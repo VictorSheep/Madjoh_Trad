@@ -126,6 +126,12 @@
 
 			var self = this;
 			this.getRandWord();
+
+			// Focus sur l'input #answer
+			$('#game').on('click', 'div', function () {
+				_this.$inputAnswer.focus();
+			});
+
 			// Lorsque l'utilisateur écrit une réponse
 			this.$inputAnswer.on("change paste keyup", function (e) {
 				_this.wordWrittenSize = e.target.value.length;
@@ -10611,12 +10617,12 @@
 	function goTo(sectionId) {
 		$('section').hide();
 		$('#' + sectionId).fadeIn();
-	}
+	};
 
 	function hideGameOverMessages() {
 		$('#win-message').hide();
 		$('#loose-message').hide();
-	}
+	};
 
 /***/ }
 /******/ ]);

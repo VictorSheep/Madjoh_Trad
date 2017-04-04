@@ -43,6 +43,12 @@ export let game = {
 	init(){
 		let self = this;
 		this.getRandWord();
+
+		// Focus sur l'input #answer
+		$('#game').on('click', 'div', ()=>{
+			this.$inputAnswer.focus();
+		});
+
 		// Lorsque l'utilisateur écrit une réponse
 		this.$inputAnswer.on("change paste keyup",(e)=> {
 			this.wordWrittenSize = e.target.value.length;
@@ -142,7 +148,7 @@ export let game = {
 		nav.goTo('game-over');
 		this.setScore(10);
 	},
-	
+
 	/**
 	 * setWord - Enregister un mot à traduire, ainsi que sa traduction
 	 * @param {String} w : 	mot français à traduire

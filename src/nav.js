@@ -15,9 +15,9 @@ export function init(){
 export function goTo(sectionId){
 	$('section').hide();
 	$('#'+sectionId).fadeIn();
-}
+};
 
 export function hideGameOverMessages(){
 	$('#win-message').hide();
 	$('#loose-message').hide();	
-}
+};
