@@ -19,7 +19,6 @@ module.exports.importFile = function(filePath, modelName) {
    let nbWordInDb = 0;
    let nbWordToTranslate = 0;
    let wordFr = '';
-   let wordEn = '';
    let WORDSFR = [];
    csv
    .fromPath(filePath)
@@ -39,13 +38,13 @@ module.exports.importFile = function(filePath, modelName) {
             // on considère qu'il est "mal traduit" par l'API
             // on ne l'enregistre pas dans la BDD
             if(WORDSFR[i] != response[i]){
+               console.log("+ "+WORDSFR[i]);
                let Obj = mongoose.model(modelName);
                let obj = new Obj({id:nbWordInDb, name: WORDSFR[i]});
                obj.save();
                nbWordInDb++;
             }else{
-               console.log(WORDSFR[i]);
-               console.log(response[i]+"\n");
+               console.log('mauvaise correction de "'+WORDSFR[i]+'"');
             }
             // si le nombre de mot dans la bdd a atteind 500 on arrête
             if (nbWordInDb>=500) break;

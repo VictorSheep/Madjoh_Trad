@@ -1,4 +1,3 @@
-console.log('translate start');
 import * as $ from 'jquery';
 
 export let translator = {
@@ -6,8 +5,6 @@ export let translator = {
 	languagePair: 'fr-en',
 	// clé de connection pour l'api Yandex
 	key: 'trnsl.1.1.20170402T081420Z.2b7b666f5e9db90b.e1e03408d5658285e063dcf21e63166e63122ba0',
-	// url de la requête
-	url: '',
 	// mot encodé à traduire
 	wordEncod: '',
 	// resultat de la requête après traduction
@@ -34,5 +31,3 @@ export let translator = {
 		});
 	}
 }
-
-console.log('translate loaded');

@@ -54,7 +54,18 @@
 
 	var _nav = __webpack_require__(5);
 
-	_game.game.pickWord();
+	var nav = _interopRequireWildcard(_nav);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var $ = __webpack_require__(4);
+
+
+	$(document).ready(function () {
+		$('section').hide();
+		$('#home').fadeIn();
+		_game.game.getRandWord();
+	});
 
 /***/ },
 /* 1 */
@@ -118,7 +129,7 @@
 				console.log(_this.word.translated);
 			});
 		},
-		pickWord: function pickWord(callback) {
+		getRandWord: function getRandWord(callback) {
 			var _this2 = this;
 
 			$.get('/word', function (data) {
@@ -145,14 +156,11 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	console.log('translate start');
 	var translator = exports.translator = {
 		// 'langueDepart-langueArrivé'
 		languagePair: 'fr-en',
 		// clé de connection pour l'api Yandex
 		key: 'trnsl.1.1.20170402T081420Z.2b7b666f5e9db90b.e1e03408d5658285e063dcf21e63166e63122ba0',
-		// url de la requête
-		url: '',
 		// mot encodé à traduire
 		wordEncod: '',
 		// resultat de la requête après traduction
@@ -180,8 +188,6 @@
 			});
 		}
 	};
-
-	console.log('translate loaded');
 
 /***/ },
 /* 4 */
@@ -10453,7 +10459,7 @@
 	});
 	var $ = __webpack_require__(4);
 
-	var nav = exports.nav = $('section').on('click', 'button.nav', function (event) {
+	exports.default = $('section').on('click', 'button.nav', function (event) {
 		var target = event.target;
 		var page = $(target).data('target');
 		$('section').hide();

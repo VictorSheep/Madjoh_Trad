@@ -37,7 +37,7 @@ export let game = {
 			console.log(this.word.translated);
 		});
 	},
-	pickWord(callback){
+	getRandWord(callback){
 		$.get('/word', (data) => {
 			this.setWord(data.name);
 			if (callback) callback(data);
