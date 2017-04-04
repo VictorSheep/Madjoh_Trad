@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Madjoh Trad</title>
 	<link rel="stylesheet" href="styles/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet">
 </head>
 <body>
 	<div id="app">
@@ -13,22 +14,35 @@
 
 		<section id="home">
 			<h3>Testez vos connaissances en anglais !</h3>
-			<button class="nav" data-target="game">Jouer</button>
+			<p>Traduisez les mots affichés à l'écran pour atteindre 20 points</p>
+			<button class="nav" data-target="game">
+				<p data-target="game">Jouer</p>
+			</button>
 		</section>
 
 		<section id="game">
 			<h2 id="score">score: {{ score }}</h2>
-			<h3>Traduire</h3>
-			<p id="requested-word">{{ requestedWord }}</p>
-			<div><input type="text" id="answer" name="answer"></div>
-			<button>Valider</button>
+			<div>
+				<p id="requested-word" v-bind:style="{ fontSize: fontSize + 'em' }">{{ requestedWord }}</p>
+				<div>
+					<input type="text" id="answer" name="answer">
+				</div>
+			</div>
+			
+				<button id="verify">
+					<p>Valider</p>
+				</button>
 		</section>
 
 		<section id="game-over">
 			<h2>20 points atteint: vous avez gagné !</h2>
 			<h2>0 point: c'est perdu. Retentez votre chance !</h2>
-			<button class="nav" data-target="game">Rejouer</button>
-			<button class="nav" data-target="home">Menu</button>
+			<button class="nav" data-target="game">
+				<p data-target="game">Rejouer</p>
+			</button>
+			<button class="nav" data-target="home">
+				<p data-target="home">Menu</p>
+			</button>
 			<p>Translation: Powered by Yandex.Translate</p>
 		</section>
 

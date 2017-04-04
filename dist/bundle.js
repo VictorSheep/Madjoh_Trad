@@ -62,8 +62,10 @@
 
 
 	$(document).ready(function () {
+		// on n'affiche que la section home
 		$('section').hide();
 		$('#home').fadeIn();
+		_game.game.init();
 		_game.game.getRandWord();
 	});
 
@@ -99,7 +101,8 @@
 		v_requestedWord: new Vue({
 			el: '#requested-word',
 			data: {
-				requestedWord: 'traduire'
+				requestedWord: 'traduire',
+				fontSize: 2
 			}
 		}),
 		v_score: new Vue({
@@ -110,30 +113,86 @@
 		}),
 		currentState: null,
 
-		// Mot à traduire
+		// Mot à traduire et sa traduction
 		word: {
 			requested: '',
 			translated: '',
 			written: ''
 		},
-
-		setScore: function setScore() {},
-		resetScore: function resetScore() {},
-		setWord: function setWord(w) {
+		init: function init() {
 			var _this = this;
 
-			this.v_requestedWord.requestedWord = w;
-			this.word.requested = w;
-			_translate.translator.translate(w, function () {
-				_this.word.translated = _translate.translator.result.text[0];
-				console.log(_this.word.translated);
+			var self = this;
+			$(document).keypress(function (e) {
+				console.log($('#game').css.display);
+				// à l'appuis sur la touche ENTER
+				if (e.which == 13) {
+					console.log("Vous avez appuyé sur la touche entrée.");
+					self.validButton();
+				}
+			});
+			$('#game').on('click', 'button#verify', function (event) {
+				_this.validButton();
 			});
 		},
-		getRandWord: function getRandWord(callback) {
+		setScore: function setScore(nb) {
+			this.v_score.score = nb;
+		},
+		addScore: function addScore(nb) {
+			this.v_score.score += nb;
+		},
+		validButton: function validButton() {
+			this.word.written = $('#game #answer')[0].value;
+			this.updateScore();
+			this.getRandWord();
+		},
+
+		/**
+	  * isTranslationOk - Compare la réponse avec la traduction retourné par l'API
+	  * @return {Bool} true: si la traduction et correct, false: si elle est fausse
+	  */
+		isTranslationOk: function isTranslationOk() {
+			return this.word.translated == this.word.written ? true : false;
+		},
+
+		/**
+	  * updateScore - Augmente ou diminu le score en fonction de la traduction proposé
+	  */
+		updateScore: function updateScore() {
+			if (this.isTranslationOk()) {
+				this.addScore(1);
+			} else {
+				this.addScore(-1);
+			}
+		},
+
+		/**
+	  * setWord - Enregister un mot à traduire, ainsi que sa traduction
+	  * @param {String} w : 	mot français à traduire
+	  */
+		setWord: function setWord(w) {
 			var _this2 = this;
 
+			// Modifie l'instance de Vue pour que le mot s'affiche dynamiquement à l'écran
+			this.v_requestedWord.requestedWord = w;
+
+			this.word.requested = w;
+			_translate.translator.translate(w, function () {
+				_this2.word.translated = _translate.translator.result.text[0];
+				console.log(_this2.word.translated);
+			});
+		},
+
+
+		/**
+	  * getRandWord - Récupère un mot aléatoire de la bdd
+	  * @param  {Function} callback
+	  */
+		getRandWord: function getRandWord(callback) {
+			var _this3 = this;
+
 			$.get('/word', function (data) {
-				_this2.setWord(data.name);
+				_this3.setWord(data.name);
 				if (callback) callback(data);
 			});
 		}

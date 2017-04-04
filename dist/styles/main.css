@@ -12,7 +12,8 @@ thème = http://www.colourlovers.com/palette/4470979/manamilazy?widths=1
 body{
 	margin: 0; padding: 0;
 	/* overflow: hidden; */
-	font-family: sans-serif;
+	font-family: 'Droid Sans Mono', monospace;
+	background-color: #F0F0F0;
 }
 body>*{
 	display: flex;
@@ -23,15 +24,60 @@ body>*>*{
 	margin-right: auto;
 	text-align: center;
 }
+section{
+	width: 85%;
+}
+
+h1{
+	font-size: 2.5em;
+}
+
 #app{
 	width: 98vw;
 	max-width: 600px;
 	height: 90vh;
 	min-height: 700px;
 	margin: 0 auto;
-	background-color: #F0F0F0;
+	background-color: #FFF;
 }
-
 .hidden{
 	display: none;
+}
+header{
+	background-color: #1DA49C;
+	width: 100%;
+	color: #fff;
+	border-bottom: 4px solid rgba(0,0,0,.15);
+	margin-bottom: 5vh;
+}
+button{
+	outline: none;
+	font-family: 'Droid Sans Mono', monospace;
+	font-size: 1.5em;
+	color: #fff;
+	width: 50%;
+	width: 6vh auto;
+	background: none;
+	background-color: #55855A;
+	border: none;
+	border-bottom: 4px solid rgba(0,0,0,.2);
+}
+
+/* section #game */
+input{
+	font-family: 'Droid Sans Mono', monospace;
+	font-size: 2em;
+	border: none;
+	outline: none;
+	text-align: center;
+	margin-bottom: 5vh;
+}
+p.requested-word{
+	font-weight: bolder;
+}
+#game>div{
+	border:1px solid rgba(100,100,100,.1);
+	box-shadow: 3px 3px rgba(0,0,0,.2);
+	padding: 2vh auto;
+	margin: 4vh 0;
 }
