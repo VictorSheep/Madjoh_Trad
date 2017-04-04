@@ -23,18 +23,24 @@ export let game = {
 		translated: '',
 		written: ''
 	},
+	$answer: $('#game #answer')[0],
 	init(){
 		let self = this;
+		console.log('init');
 		$(document).keypress(function(e){
-			console.log($('#game').css.display);
-			// à l'appuis sur la touche ENTER
-			if( e.which == 13 ){
-				console.log("Vous avez appuyé sur la touche entrée.");
-				self.validButton();
+			if($('#game').css('display')=="block"){
+				// à l'appuis sur la touche ENTER
+				if( e.which == 13 ){
+					self.validButton();
+				}
 			}
 		});
 		$('#game').on('click','button#verify',(event)=>{
 			this.validButton();
+		});
+		$('#game-over').on('click','button',(event)=>{
+			$('#win-message').hide();
+			$('#loose-message').hide();
 		});
 	},
 	setScore(nb){
@@ -44,9 +50,11 @@ export let game = {
 		this.v_score.score += nb;
 	},
 	validButton(){
-		this.word.written = $('#game #answer')[0].value;
+		this.word.written = this.$answer.value;
 		this.updateScore();
 		this.getRandWord();
+		this.$answer.value='';
+		this.gameOver();
 	},
 	/**
 	 * isTranslationOk - Compare la réponse avec la traduction retourné par l'API
@@ -60,10 +68,28 @@ export let game = {
 	 */
 	updateScore(){
 		if(this.isTranslationOk()){
-			this.addScore(1);
+			this.addScore(2);
 		}else{
-			this.addScore(-1);
+			this.addScore(-2);
 		}
+	},
+	gameOver(){
+		// Si on a 20 pts ou plus c'est gagné
+		if(this.v_score.score>=20){
+			$('#win-message').show(); // on affiche le message correspondant
+		}
+		// Si on a 0 pts ou moins c'est perdu
+		else if(this.v_score.score<=0){
+			$('#loose-message').show(); // on affiche le message correspodant
+		}
+		// Si non on quite la methode gameOver()
+		else{
+			return;
+		}
+		// On passe à l'écran de fin de jeu
+		$('section').hide();
+		$('#game-over').fadeIn();
+		this.setScore(10);
 	},
 	/**
 	 * setWord - Enregister un mot à traduire, ainsi que sa traduction
@@ -76,6 +102,8 @@ export let game = {
 		this.word.requested = w;
 		translator.translate(w, ()=>{
 			this.word.translated = translator.result.text[0];
+			// on affiche la première lettre du mot traduit dans l'input
+			this.$answer.value = this.word.translated[0];
 			console.log(this.word.translated);
 		});
 	},

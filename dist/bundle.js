@@ -62,6 +62,8 @@
 
 
 	$(document).ready(function () {
+		$('#win-message').hide();
+		$('#loose-message').hide();
 		// on n'affiche que la section home
 		$('section').hide();
 		$('#home').fadeIn();
@@ -119,20 +121,26 @@
 			translated: '',
 			written: ''
 		},
+		$answer: $('#game #answer')[0],
 		init: function init() {
 			var _this = this;
 
 			var self = this;
+			console.log('init');
 			$(document).keypress(function (e) {
-				console.log($('#game').css.display);
-				// à l'appuis sur la touche ENTER
-				if (e.which == 13) {
-					console.log("Vous avez appuyé sur la touche entrée.");
-					self.validButton();
+				if ($('#game').css('display') == "block") {
+					// à l'appuis sur la touche ENTER
+					if (e.which == 13) {
+						self.validButton();
+					}
 				}
 			});
 			$('#game').on('click', 'button#verify', function (event) {
 				_this.validButton();
+			});
+			$('#game-over').on('click', 'button', function (event) {
+				$('#win-message').hide();
+				$('#loose-message').hide();
 			});
 		},
 		setScore: function setScore(nb) {
@@ -142,9 +150,11 @@
 			this.v_score.score += nb;
 		},
 		validButton: function validButton() {
-			this.word.written = $('#game #answer')[0].value;
+			this.word.written = this.$answer.value;
 			this.updateScore();
 			this.getRandWord();
+			this.$answer.value = '';
+			this.gameOver();
 		},
 
 		/**
@@ -160,10 +170,28 @@
 	  */
 		updateScore: function updateScore() {
 			if (this.isTranslationOk()) {
-				this.addScore(1);
+				this.addScore(2);
 			} else {
-				this.addScore(-1);
+				this.addScore(-2);
 			}
+		},
+		gameOver: function gameOver() {
+			// Si on a 20 pts ou plus c'est gagné
+			if (this.v_score.score >= 20) {
+				$('#win-message').show(); // on affiche le message correspondant
+			}
+			// Si on a 0 pts ou moins c'est perdu
+			else if (this.v_score.score <= 0) {
+					$('#loose-message').show(); // on affiche le message correspodant
+				}
+				// Si non on quite la methode gameOver()
+				else {
+						return;
+					}
+			// On passe à l'écran de fin de jeu
+			$('section').hide();
+			$('#game-over').fadeIn();
+			this.setScore(10);
 		},
 
 		/**
@@ -179,6 +207,8 @@
 			this.word.requested = w;
 			_translate.translator.translate(w, function () {
 				_this2.word.translated = _translate.translator.result.text[0];
+				// on affiche la première lettre du mot traduit dans l'input
+				_this2.$answer.value = _this2.word.translated[0];
 				console.log(_this2.word.translated);
 			});
 		},

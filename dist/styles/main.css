@@ -64,13 +64,17 @@ button{
 }
 
 /* section #game */
-input{
+input, #size-answer{
 	font-family: 'Droid Sans Mono', monospace;
 	font-size: 2em;
 	border: none;
 	outline: none;
 	text-align: center;
 	margin-bottom: 5vh;
+}
+#size-answer{
+	line-height: 0;
+	margin-top: -5vh;
 }
 p.requested-word{
 	font-weight: bolder;

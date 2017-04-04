@@ -5,6 +5,8 @@ import {translator} from './translate.js';
 import * as nav from './nav';
 
 $(document).ready(()=>{
+	$('#win-message').hide();
+	$('#loose-message').hide();
 	// on n'affiche que la section home
 	$('section').hide();
 	$('#home').fadeIn();
