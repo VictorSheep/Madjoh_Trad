@@ -18,6 +18,14 @@ export let game = {
 			score: 10
 		}
 	}),
+	// Instance Vue.js correspondant 
+	v_toast : new Vue({
+		el: '.toast',
+		data: {
+			answer: 'réponse',
+			translation: 'answer'
+		}
+	}),
 	currentState: null,
 
 	// Mot à traduire et sa traduction
@@ -37,6 +45,7 @@ export let game = {
 		invalidColor: $('#size-answer').css("color")
 	},
 	// Eléments jquery utiles
+	$toast: $('#game .toast'),
 	$inputAnswer: $('#game #answer'),
 	$sizeIndication: $('#size-answer'),
 
@@ -44,8 +53,12 @@ export let game = {
 		let self = this;
 		this.getRandWord();
 
+		// 
+		$('#game').on('click', '.toast', ()=>{
+			this.$toast.stop().animate({opacity:0},100);
+		});
 		// Focus sur l'input #answer
-		$('#game').on('click', 'div', ()=>{
+		$('#game').on('click', 'div#to-input', ()=>{
 			this.$inputAnswer.focus();
 		});
 
@@ -98,6 +111,7 @@ export let game = {
 
 	validButton(){
 		this.word.written = this.$inputAnswer[0].value;
+		this.updateToast();
 		this.updateScore();
 		this.getRandWord();
 		this.$inputAnswer[0].value='';
@@ -128,6 +142,23 @@ export let game = {
 			this.addScore(2);
 		}else{
 			this.addScore(-2);
+		}
+	},
+
+	/**
+	 * updateToast - Affiche le toast si la traduction n'est pas correcte
+	 */
+	updateToast(){
+		if(!this.isTranslationOk()){
+			this.v_toast.answer = this.word.written;
+			this.v_toast.translation = this.word.translated;
+			this.$toast.animate({
+				opacity:1
+			},100,()=>{
+				this.$toast.delay(6000).animate({
+					opacity:0
+				},500);
+			});
 		}
 	},
 

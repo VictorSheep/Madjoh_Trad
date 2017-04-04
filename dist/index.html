@@ -22,17 +22,20 @@
 
 		<section id="game">
 			<h2 id="score">score: {{ score }}</h2>
-			<div>
+			<div id="to-input">
 				<p id="requested-word" v-bind:style="{ fontSize: fontSize + 'em' }">{{ requestedWord }}</p>
 				<div>
 					<input type="text" id="answer" name="answer" maxlength="10">
 					<p id="size-answer">-------</p>
 				</div>
 			</div>
-			
-				<button id="verify">
-					<p>Valider</p>
-				</button>
+			<div class="toast">
+				<p>Votre réponse: {{ answer }}</p>
+				<p>Traduction correct: {{ translation }}</p>
+			</div>
+			<button id="verify">
+				<p>Valider</p>
+			</button>
 		</section>
 
 		<section id="game-over">

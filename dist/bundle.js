@@ -99,6 +99,14 @@
 				score: 10
 			}
 		}),
+		// Instance Vue.js correspondant 
+		v_toast: new Vue({
+			el: '.toast',
+			data: {
+				answer: 'réponse',
+				translation: 'answer'
+			}
+		}),
 		currentState: null,
 
 		// Mot à traduire et sa traduction
@@ -118,6 +126,7 @@
 			invalidColor: $('#size-answer').css("color")
 		},
 		// Eléments jquery utiles
+		$toast: $('#game .toast'),
 		$inputAnswer: $('#game #answer'),
 		$sizeIndication: $('#size-answer'),
 
@@ -127,8 +136,12 @@
 			var self = this;
 			this.getRandWord();
 
+			// 
+			$('#game').on('click', '.toast', function () {
+				_this.$toast.stop().animate({ opacity: 0 }, 100);
+			});
 			// Focus sur l'input #answer
-			$('#game').on('click', 'div', function () {
+			$('#game').on('click', 'div#to-input', function () {
 				_this.$inputAnswer.focus();
 			});
 
@@ -182,6 +195,7 @@
 		},
 		validButton: function validButton() {
 			this.word.written = this.$inputAnswer[0].value;
+			this.updateToast();
 			this.updateScore();
 			this.getRandWord();
 			this.$inputAnswer[0].value = '';
@@ -217,6 +231,26 @@
 				this.addScore(-2);
 			}
 		},
+
+
+		/**
+	  * updateToast - Affiche le toast si la traduction n'est pas correcte
+	  */
+		updateToast: function updateToast() {
+			var _this2 = this;
+
+			if (!this.isTranslationOk()) {
+				this.v_toast.answer = this.word.written;
+				this.v_toast.translation = this.word.translated;
+				this.$toast.animate({
+					opacity: 1
+				}, 100, function () {
+					_this2.$toast.delay(6000).animate({
+						opacity: 0
+					}, 500);
+				});
+			}
+		},
 		gameOver: function gameOver() {
 			// Si on a 20 pts ou plus c'est gagné
 			if (this.v_score.score >= 20) {
@@ -241,27 +275,27 @@
 	  * @param {String} w : 	mot français à traduire
 	  */
 		setWord: function setWord(w) {
-			var _this2 = this;
+			var _this3 = this;
 
 			// Modifie l'instance de Vue pour que le mot s'affiche dynamiquement à l'écran
 			this.v_requestedWord.requestedWord = w;
 
 			this.word.requested = w;
 			_translate.translator.translate(w, function () {
-				_this2.word.translated = _translate.translator.result.text[0];
+				_this3.word.translated = _translate.translator.result.text[0];
 				// On affiche la première lettre du mot traduit dans l'input
-				_this2.$inputAnswer[0].value = _this2.word.translated[0];
+				_this3.$inputAnswer[0].value = _this3.word.translated[0];
 				//console.log(this.word.translated);
 				// On engegistre la longueur du mot traduit
-				_this2.wordTranslatedSize = _this2.word.translated.length;
+				_this3.wordTranslatedSize = _this3.word.translated.length;
 				// On affiche la longueur
-				_this2.sizeIndication.text = '';
-				for (var i = 0; i < _this2.wordTranslatedSize; i++) {
-					_this2.sizeIndication.text += '-';
+				_this3.sizeIndication.text = '';
+				for (var i = 0; i < _this3.wordTranslatedSize; i++) {
+					_this3.sizeIndication.text += '-';
 				}
-				_this2.$sizeIndication.text(_this2.sizeIndication.text);
+				_this3.$sizeIndication.text(_this3.sizeIndication.text);
 				// On bloque le nombre de carartere max de l'input
-				_this2.$inputAnswer.attr("maxlength", _this2.wordTranslatedSize);
+				_this3.$inputAnswer.attr("maxlength", _this3.wordTranslatedSize);
 			});
 		},
 
@@ -271,10 +305,10 @@
 	  * @param  {Function} callback
 	  */
 		getRandWord: function getRandWord(callback) {
-			var _this3 = this;
+			var _this4 = this;
 
 			$.get('/word', function (data) {
-				_this3.setWord(data.name);
+				_this4.setWord(data.name);
 				if (callback) callback(data);
 			});
 		}
