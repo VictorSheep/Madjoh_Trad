@@ -23,7 +23,11 @@ export let game = {
 		translated: '',
 		written: ''
 	},
+	// Taille du mot traduit
+	wordTranslatedSize: 0,
+	sizeIndicationText: '',
 	$answer: $('#game #answer')[0],
+	$sizeIndication: $('#size-answer'),
 	init(){
 		let self = this;
 		console.log('init');
@@ -102,9 +106,17 @@ export let game = {
 		this.word.requested = w;
 		translator.translate(w, ()=>{
 			this.word.translated = translator.result.text[0];
-			// on affiche la première lettre du mot traduit dans l'input
+			// On affiche la première lettre du mot traduit dans l'input
 			this.$answer.value = this.word.translated[0];
 			console.log(this.word.translated);
+			// On engegistre la longueur du mot traduit
+			this.wordTranslatedSize = this.word.translated.length;
+			console.log(this.$sizeIndication.text());
+			this.sizeIndicationText = '';
+			for (var i = 0; i < this.wordTranslatedSize; i++) {
+				this.sizeIndicationText += '-';
+			}
+			this.$sizeIndication.text(this.sizeIndicationText);
 		});
 	},
 

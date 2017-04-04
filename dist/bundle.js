@@ -121,7 +121,11 @@
 			translated: '',
 			written: ''
 		},
+		// Taille du mot traduit
+		wordTranslatedSize: 0,
+		sizeIndicationText: '',
 		$answer: $('#game #answer')[0],
+		$sizeIndication: $('#size-answer'),
 		init: function init() {
 			var _this = this;
 
@@ -207,9 +211,17 @@
 			this.word.requested = w;
 			_translate.translator.translate(w, function () {
 				_this2.word.translated = _translate.translator.result.text[0];
-				// on affiche la première lettre du mot traduit dans l'input
+				// On affiche la première lettre du mot traduit dans l'input
 				_this2.$answer.value = _this2.word.translated[0];
 				console.log(_this2.word.translated);
+				// On engegistre la longueur du mot traduit
+				_this2.wordTranslatedSize = _this2.word.translated.length;
+				console.log(_this2.$sizeIndication.text());
+				_this2.sizeIndicationText = '';
+				for (var i = 0; i < _this2.wordTranslatedSize; i++) {
+					_this2.sizeIndicationText += '-';
+				}
+				_this2.$sizeIndication.text(_this2.sizeIndicationText);
 			});
 		},
 
