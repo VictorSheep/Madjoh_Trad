@@ -53,7 +53,7 @@ export let game = {
 		let self = this;
 		this.getRandWord();
 
-		// 
+		// Au clic sur le toast, celui-ci disparait
 		$('#game').on('click', '.toast', ()=>{
 			this.$toast.stop().animate({opacity:0},100);
 		});
@@ -185,7 +185,7 @@ export let game = {
 	},
 
 	/**
-	 * setWord - Enregister un mot à traduire, ainsi que sa traduction
+	 * setWord - Enregiste un mot à traduire, sa traduction, et la taille de la traduction attendu
 	 * @param {String} w : 	mot français à traduire
 	 */
 	setWord(w){

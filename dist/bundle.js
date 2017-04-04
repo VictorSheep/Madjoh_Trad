@@ -135,7 +135,7 @@
 			var self = this;
 			this.getRandWord();
 
-			// 
+			// Au clic sur le toast, celui-ci disparait
 			$('#game').on('click', '.toast', function () {
 				_this.$toast.stop().animate({ opacity: 0 }, 100);
 			});
@@ -274,7 +274,7 @@
 
 
 		/**
-	  * setWord - Enregister un mot à traduire, ainsi que sa traduction
+	  * setWord - Enregiste un mot à traduire, sa traduction, et la taille de la traduction attendu
 	  * @param {String} w : 	mot français à traduire
 	  */
 		setWord: function setWord(w) {
