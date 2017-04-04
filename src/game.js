@@ -83,12 +83,12 @@ export let game = {
 				}
 			}
 		});
-		$('#game').on('click','button#verify',(event)=>{
+		$('#game').on('click','button#verify',()=>{
 			// la vérification ne s'effectu que si la taille de la réponse
 			// de l'utilisateur est égale à celle de la traduction
 			if(this.isSizeOk()) this.validButton();
 		});
-		$('#game-over').on('click','button',(event)=>{
+		$('#game-over').on('click','button',()=>{
 			nav.hideGameOverMessages();
 		});
 	},
@@ -178,6 +178,9 @@ export let game = {
 		}
 		// On passe à l'écran de fin de jeu
 		nav.goTo('game-over');
+		// On efface le toast
+		this.$toast.stop().animate({opacity:0},100);
+		// Et on repasse le score à 10
 		this.setScore(10);
 	},
 

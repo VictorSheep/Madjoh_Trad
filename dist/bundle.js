@@ -165,12 +165,12 @@
 					}
 				}
 			});
-			$('#game').on('click', 'button#verify', function (event) {
+			$('#game').on('click', 'button#verify', function () {
 				// la vérification ne s'effectu que si la taille de la réponse
 				// de l'utilisateur est égale à celle de la traduction
 				if (_this.isSizeOk()) _this.validButton();
 			});
-			$('#game-over').on('click', 'button', function (event) {
+			$('#game-over').on('click', 'button', function () {
 				nav.hideGameOverMessages();
 			});
 		},
@@ -266,6 +266,9 @@
 					}
 			// On passe à l'écran de fin de jeu
 			nav.goTo('game-over');
+			// On efface le toast
+			this.$toast.stop().animate({ opacity: 0 }, 100);
+			// Et on repasse le score à 10
 			this.setScore(10);
 		},
 
