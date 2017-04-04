@@ -73,6 +73,7 @@ export let game = {
 			nav.hideGameOverMessages();
 		});
 	},
+
 	/**
 	 * setScore - Attribu une valeur au score
 	 * @param {Number} nb : 	nouvelle valeur du score
@@ -80,6 +81,7 @@ export let game = {
 	setScore(nb){
 		this.v_score.score = nb;
 	},
+
 	/**
 	 * addScore - Ajoute une valeur au score
 	 * @param {Number} nb : 	valeur à ajouter
@@ -87,6 +89,7 @@ export let game = {
 	addScore(nb){
 		this.v_score.score += nb;
 	},
+
 	validButton(){
 		this.word.written = this.$inputAnswer[0].value;
 		this.updateScore();
@@ -94,8 +97,7 @@ export let game = {
 		this.$inputAnswer[0].value='';
 		this.gameOver();
 	},
-	checkSize(){
-	},
+
 	/**
 	 * isTranslationOk - Compare la réponse avec la traduction retourné par l'API
 	 * @return {Boolean} true: si la traduction et correct, false: si elle est fausse
@@ -103,6 +105,7 @@ export let game = {
 	isTranslationOk(){
 		return (this.word.translated==this.word.written)? true : false;
 	},
+
 	/**
 	 * isSizeOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
 	 * @return {Boolean} true: si la taille et la même, false: si elle est différente
@@ -110,6 +113,7 @@ export let game = {
 	isSizeOk(){
 		return (this.wordWrittenSize==this.wordTranslatedSize)? true : false;
 	},
+
 	/**
 	 * updateScore - Augmente ou diminu le score en fonction de la traduction proposé
 	 */
@@ -120,6 +124,7 @@ export let game = {
 			this.addScore(-2);
 		}
 	},
+
 	gameOver(){
 		// Si on a 20 pts ou plus c'est gagné
 		if(this.v_score.score>=20){
@@ -137,6 +142,7 @@ export let game = {
 		nav.goTo('game-over');
 		this.setScore(10);
 	},
+	
 	/**
 	 * setWord - Enregister un mot à traduire, ainsi que sa traduction
 	 * @param {String} w : 	mot français à traduire

@@ -48,8 +48,6 @@
 
 	var _game = __webpack_require__(2);
 
-	var _translate = __webpack_require__(3);
-
 	var _nav = __webpack_require__(5);
 
 	var nav = _interopRequireWildcard(_nav);
@@ -159,6 +157,7 @@
 			});
 		},
 
+
 		/**
 	  * setScore - Attribu une valeur au score
 	  * @param {Number} nb : 	nouvelle valeur du score
@@ -166,6 +165,7 @@
 		setScore: function setScore(nb) {
 			this.v_score.score = nb;
 		},
+
 
 		/**
 	  * addScore - Ajoute une valeur au score
@@ -181,7 +181,7 @@
 			this.$inputAnswer[0].value = '';
 			this.gameOver();
 		},
-		checkSize: function checkSize() {},
+
 
 		/**
 	  * isTranslationOk - Compare la réponse avec la traduction retourné par l'API
@@ -191,6 +191,7 @@
 			return this.word.translated == this.word.written ? true : false;
 		},
 
+
 		/**
 	  * isSizeOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
 	  * @return {Boolean} true: si la taille et la même, false: si elle est différente
@@ -198,6 +199,7 @@
 		isSizeOk: function isSizeOk() {
 			return this.wordWrittenSize == this.wordTranslatedSize ? true : false;
 		},
+
 
 		/**
 	  * updateScore - Augmente ou diminu le score en fonction de la traduction proposé
@@ -226,6 +228,7 @@
 			nav.goTo('game-over');
 			this.setScore(10);
 		},
+
 
 		/**
 	  * setWord - Enregister un mot à traduire, ainsi que sa traduction
