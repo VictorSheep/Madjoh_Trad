@@ -39,7 +39,8 @@ export let game = {
 
 	init(){
 		let self = this;
-		console.log('init');
+
+		// Lorsque l'utilisateur écrit une réponse
 		this.$inputAnswer.on("change paste keyup",(e)=> {
 			this.wordWrittenSize = e.target.value.length;
 			if (this.isSizeOk()){
@@ -48,16 +49,18 @@ export let game = {
 				this.$sizeIndication.css("color",this.sizeIndication.invalidColor);
 			}
 		});
+
+		// Lorsque l'utilisateur valide
 		$(document).keypress((e)=>{
 			if($('#game').css('display')=="block"){
 				// à l'appuis sur la touche ENTER
 				if( e.which == 13 ){
-					self.validButton();
+					if(self.isSizeOk()) self.validButton();
 				}
 			}
 		});
 		$('#game').on('click','button#verify',(event)=>{
-			this.validButton();
+			if(this.isSizeOk()) this.validButton();
 		});
 		$('#game-over').on('click','button',(event)=>{
 			$('#win-message').hide();

@@ -46,8 +46,6 @@
 
 	'use strict';
 
-	var _player = __webpack_require__(1);
-
 	var _game = __webpack_require__(2);
 
 	var _translate = __webpack_require__(3);
@@ -72,20 +70,7 @@
 	});
 
 /***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	var player = exports.player = {
-		score: 10,
-		answer: ''
-	};
-
-/***/ },
+/* 1 */,
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -139,7 +124,8 @@
 			var _this = this;
 
 			var self = this;
-			console.log('init');
+
+			// Lorsque l'utilisateur écrit une réponse
 			this.$inputAnswer.on("change paste keyup", function (e) {
 				_this.wordWrittenSize = e.target.value.length;
 				if (_this.isSizeOk()) {
@@ -148,16 +134,18 @@
 					_this.$sizeIndication.css("color", _this.sizeIndication.invalidColor);
 				}
 			});
+
+			// Lorsque l'utilisateur valide
 			$(document).keypress(function (e) {
 				if ($('#game').css('display') == "block") {
 					// à l'appuis sur la touche ENTER
 					if (e.which == 13) {
-						self.validButton();
+						if (self.isSizeOk()) self.validButton();
 					}
 				}
 			});
 			$('#game').on('click', 'button#verify', function (event) {
-				_this.validButton();
+				if (_this.isSizeOk()) _this.validButton();
 			});
 			$('#game-over').on('click', 'button', function (event) {
 				$('#win-message').hide();
