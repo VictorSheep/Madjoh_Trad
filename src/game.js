@@ -18,12 +18,12 @@ export let game = {
 			score: 10
 		}
 	}),
-	// Instance Vue.js correspondant 
+	// Instance Vue.js correspondant au toast
 	v_toast : new Vue({
 		el: '.toast',
 		data: {
-			answer: 'réponse',
-			translation: 'answer'
+			wordWritten: 'réponse',
+			wordTransleted: 'answer'
 		}
 	}),
 	currentState: null,
@@ -110,6 +110,7 @@ export let game = {
 	},
 
 	validButton(){
+		this.$toast.stop().animate({opacity:0},100);
 		this.word.written = this.$inputAnswer[0].value;
 		this.updateToast();
 		this.updateScore();
@@ -150,9 +151,9 @@ export let game = {
 	 */
 	updateToast(){
 		if(!this.isTranslationOk()){
-			this.v_toast.answer = this.word.written;
-			this.v_toast.translation = this.word.translated;
-			this.$toast.animate({
+			this.v_toast.wordWritten = this.word.written;
+			this.v_toast.wordTransleted = this.word.translated;
+			this.$toast.stop().animate({
 				opacity:1
 			},100,()=>{
 				this.$toast.delay(6000).animate({

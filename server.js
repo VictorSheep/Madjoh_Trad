@@ -8,10 +8,10 @@ port = 8020;
 // connexion à la bdd
 mongoose.connect('mongodb://sheep:madsheep@ds149040.mlab.com:49040/madjoh_trad');
 
-console.log("Serveur lancé: app écoute le port " + port);
 app.use('/', express.static(__dirname + '/dist'));
 
 app.listen(port);
+console.log("Serveur lancé: app écoute le port " + port);
 
 app.get('/', function(req, res) {
     //res.setHeader('200', 'text/plain');

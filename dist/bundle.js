@@ -46,15 +46,15 @@
 
 	'use strict';
 
-	var _game = __webpack_require__(2);
+	var _game = __webpack_require__(1);
 
-	var _nav = __webpack_require__(5);
+	var _nav = __webpack_require__(4);
 
 	var nav = _interopRequireWildcard(_nav);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(3);
 
 
 	$(document).ready(function () {
@@ -63,8 +63,7 @@
 	});
 
 /***/ },
-/* 1 */,
-/* 2 */
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -74,15 +73,15 @@
 	});
 	exports.game = undefined;
 
-	var _translate = __webpack_require__(3);
+	var _translate = __webpack_require__(2);
 
-	var _nav = __webpack_require__(5);
+	var _nav = __webpack_require__(4);
 
 	var nav = _interopRequireWildcard(_nav);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(3);
 	var game = exports.game = {
 		// Instance Vue.js correspondant au mot francais à traduire
 		v_requestedWord: new Vue({
@@ -99,12 +98,12 @@
 				score: 10
 			}
 		}),
-		// Instance Vue.js correspondant 
+		// Instance Vue.js correspondant au toast
 		v_toast: new Vue({
 			el: '.toast',
 			data: {
-				answer: 'réponse',
-				translation: 'answer'
+				wordWritten: 'réponse',
+				wordTransleted: 'answer'
 			}
 		}),
 		currentState: null,
@@ -194,6 +193,7 @@
 			this.v_score.score += nb;
 		},
 		validButton: function validButton() {
+			this.$toast.stop().animate({ opacity: 0 }, 100);
 			this.word.written = this.$inputAnswer[0].value;
 			this.updateToast();
 			this.updateScore();
@@ -240,9 +240,9 @@
 			var _this2 = this;
 
 			if (!this.isTranslationOk()) {
-				this.v_toast.answer = this.word.written;
-				this.v_toast.translation = this.word.translated;
-				this.$toast.animate({
+				this.v_toast.wordWritten = this.word.written;
+				this.v_toast.wordTransleted = this.word.translated;
+				this.$toast.stop().animate({
 					opacity: 1
 				}, 100, function () {
 					_this2.$toast.delay(6000).animate({
@@ -315,7 +315,7 @@
 	};
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -325,7 +325,7 @@
 	});
 	exports.translator = undefined;
 
-	var _jquery = __webpack_require__(4);
+	var _jquery = __webpack_require__(3);
 
 	var $ = _interopRequireWildcard(_jquery);
 
@@ -365,7 +365,7 @@
 	};
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10624,7 +10624,7 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10635,7 +10635,7 @@
 	exports.init = init;
 	exports.goTo = goTo;
 	exports.hideGameOverMessages = hideGameOverMessages;
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(3);
 
 	exports.default = $('section').on('click', 'button.nav', function (event) {
 		var target = event.target;
