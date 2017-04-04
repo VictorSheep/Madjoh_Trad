@@ -63,6 +63,14 @@ button{
 	border-bottom: 4px solid rgba(0,0,0,.2);
 }
 
+/* section #home */
+#home>*{
+	margin-bottom: 50px;
+}
+#home>button{
+	margin-top: 50px;
+}
+
 /* section #game */
 input, #size-answer{
 	font-family: 'Droid Sans Mono', monospace;
@@ -93,4 +101,12 @@ p.requested-word{
 #game .toast{
 	color: #AE5511;
 	opacity: 0;
+}
+
+/* section #game-over */
+#game-over{
+	height: 90%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 }
