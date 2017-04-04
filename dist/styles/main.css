@@ -71,10 +71,14 @@ input, #size-answer{
 	outline: none;
 	text-align: center;
 	margin-bottom: 5vh;
+	z-index: 2;
 }
 #size-answer{
 	line-height: 0;
 	margin-top: -5vh;
+	user-select: none;
+	color: #CCC;
+	z-index: 0;
 }
 p.requested-word{
 	font-weight: bolder;

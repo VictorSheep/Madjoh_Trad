@@ -25,13 +25,30 @@ export let game = {
 	},
 	// Taille du mot traduit
 	wordTranslatedSize: 0,
-	sizeIndicationText: '',
-	$answer: $('#game #answer')[0],
+	// Taille du mot écrit par l'utilisateur
+	wordWrittenSize: 0,
+
+	sizeIndication:{
+		text: '',
+		validColor:'#55855A',
+		invalidColor: $('#size-answer').css("color")
+	},
+	// Eléments jquery utiles
+	$inputAnswer: $('#game #answer'),
 	$sizeIndication: $('#size-answer'),
+
 	init(){
 		let self = this;
 		console.log('init');
-		$(document).keypress(function(e){
+		this.$inputAnswer.on("change paste keyup",(e)=> {
+			this.wordWrittenSize = e.target.value.length;
+			if (this.isSizeOk()){
+				this.$sizeIndication.css("color",this.sizeIndication.validColor);
+			}else{
+				this.$sizeIndication.css("color",this.sizeIndication.invalidColor);
+			}
+		});
+		$(document).keypress((e)=>{
 			if($('#game').css('display')=="block"){
 				// à l'appuis sur la touche ENTER
 				if( e.which == 13 ){
@@ -54,18 +71,27 @@ export let game = {
 		this.v_score.score += nb;
 	},
 	validButton(){
-		this.word.written = this.$answer.value;
+		this.word.written = this.$inputAnswer[0].value;
 		this.updateScore();
 		this.getRandWord();
-		this.$answer.value='';
+		this.$inputAnswer[0].value='';
 		this.gameOver();
+	},
+	checkSize(){
 	},
 	/**
 	 * isTranslationOk - Compare la réponse avec la traduction retourné par l'API
-	 * @return {Bool} true: si la traduction et correct, false: si elle est fausse
+	 * @return {Boolean} true: si la traduction et correct, false: si elle est fausse
 	 */
 	isTranslationOk(){
 		return (this.word.translated==this.word.written)? true : false;
+	},
+	/**
+	 * isTranslationOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
+	 * @return {Boolean} true: si la taille et la même, false: si elle est différente
+	 */
+	isSizeOk(){
+		return (this.wordWrittenSize==this.wordTranslatedSize)? true : false;
 	},
 	/**
 	 * updateScore - Augmente ou diminu le score en fonction de la traduction proposé
@@ -107,16 +133,18 @@ export let game = {
 		translator.translate(w, ()=>{
 			this.word.translated = translator.result.text[0];
 			// On affiche la première lettre du mot traduit dans l'input
-			this.$answer.value = this.word.translated[0];
-			console.log(this.word.translated);
+			this.$inputAnswer[0].value = this.word.translated[0];
+			//console.log(this.word.translated);
 			// On engegistre la longueur du mot traduit
 			this.wordTranslatedSize = this.word.translated.length;
-			console.log(this.$sizeIndication.text());
-			this.sizeIndicationText = '';
+			// On affiche la longueur
+			this.sizeIndication.text = '';
 			for (var i = 0; i < this.wordTranslatedSize; i++) {
-				this.sizeIndicationText += '-';
+				this.sizeIndication.text += '-';
 			}
-			this.$sizeIndication.text(this.sizeIndicationText);
+			this.$sizeIndication.text(this.sizeIndication.text);
+			// On bloque le nombre de carartere max de l'input
+			this.$inputAnswer.attr("maxlength", this.wordTranslatedSize);
 		});
 	},
 

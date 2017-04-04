@@ -123,14 +123,31 @@
 		},
 		// Taille du mot traduit
 		wordTranslatedSize: 0,
-		sizeIndicationText: '',
-		$answer: $('#game #answer')[0],
+		// Taille du mot écrit par l'utilisateur
+		wordWrittenSize: 0,
+
+		sizeIndication: {
+			text: '',
+			validColor: '#55855A',
+			invalidColor: $('#size-answer').css("color")
+		},
+		// Eléments jquery utiles
+		$inputAnswer: $('#game #answer'),
 		$sizeIndication: $('#size-answer'),
+
 		init: function init() {
 			var _this = this;
 
 			var self = this;
 			console.log('init');
+			this.$inputAnswer.on("change paste keyup", function (e) {
+				_this.wordWrittenSize = e.target.value.length;
+				if (_this.isSizeOk()) {
+					_this.$sizeIndication.css("color", _this.sizeIndication.validColor);
+				} else {
+					_this.$sizeIndication.css("color", _this.sizeIndication.invalidColor);
+				}
+			});
 			$(document).keypress(function (e) {
 				if ($('#game').css('display') == "block") {
 					// à l'appuis sur la touche ENTER
@@ -154,19 +171,28 @@
 			this.v_score.score += nb;
 		},
 		validButton: function validButton() {
-			this.word.written = this.$answer.value;
+			this.word.written = this.$inputAnswer[0].value;
 			this.updateScore();
 			this.getRandWord();
-			this.$answer.value = '';
+			this.$inputAnswer[0].value = '';
 			this.gameOver();
 		},
+		checkSize: function checkSize() {},
 
 		/**
 	  * isTranslationOk - Compare la réponse avec la traduction retourné par l'API
-	  * @return {Bool} true: si la traduction et correct, false: si elle est fausse
+	  * @return {Boolean} true: si la traduction et correct, false: si elle est fausse
 	  */
 		isTranslationOk: function isTranslationOk() {
 			return this.word.translated == this.word.written ? true : false;
+		},
+
+		/**
+	  * isTranslationOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
+	  * @return {Boolean} true: si la taille et la même, false: si elle est différente
+	  */
+		isSizeOk: function isSizeOk() {
+			return this.wordWrittenSize == this.wordTranslatedSize ? true : false;
 		},
 
 		/**
@@ -212,16 +238,18 @@
 			_translate.translator.translate(w, function () {
 				_this2.word.translated = _translate.translator.result.text[0];
 				// On affiche la première lettre du mot traduit dans l'input
-				_this2.$answer.value = _this2.word.translated[0];
-				console.log(_this2.word.translated);
+				_this2.$inputAnswer[0].value = _this2.word.translated[0];
+				//console.log(this.word.translated);
 				// On engegistre la longueur du mot traduit
 				_this2.wordTranslatedSize = _this2.word.translated.length;
-				console.log(_this2.$sizeIndication.text());
-				_this2.sizeIndicationText = '';
+				// On affiche la longueur
+				_this2.sizeIndication.text = '';
 				for (var i = 0; i < _this2.wordTranslatedSize; i++) {
-					_this2.sizeIndicationText += '-';
+					_this2.sizeIndication.text += '-';
 				}
-				_this2.$sizeIndication.text(_this2.sizeIndicationText);
+				_this2.$sizeIndication.text(_this2.sizeIndication.text);
+				// On bloque le nombre de carartere max de l'input
+				_this2.$inputAnswer.attr("maxlength", _this2.wordTranslatedSize);
 			});
 		},
 
