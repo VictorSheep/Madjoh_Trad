@@ -1,10 +1,11 @@
 let $ = require('jquery');
+import {translator} from './translate.js';
 
 export let game = {
 	v_requestedWord : new Vue({
 		el: '#requested-word',
 		data: {
-			requestedWord: 'Grandir'
+			requestedWord: 'traduire' 
 		}
 	}),
 	v_score : new Vue({
@@ -28,10 +29,18 @@ export let game = {
 	resetScore(){
 
 	},
+	setWord(w){
+		this.v_requestedWord.requestedWord = w;
+		this.word.requested = w;
+		translator.translate(w, ()=>{
+			this.word.translated = translator.result.text[0];
+			console.log(this.word.translated);
+		});
+	},
 	pickWord(callback){
-		$.get('/words', (data) => {
-			console.log(data);
-			callback(data);
-		})
+		$.get('/word', (data) => {
+			this.setWord(data.name);
+			if (callback) callback(data);
+		});
 	}
 }

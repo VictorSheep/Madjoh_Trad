@@ -50,17 +50,11 @@
 
 	var _game = __webpack_require__(2);
 
-	var _translate = __webpack_require__(4);
+	var _translate = __webpack_require__(3);
 
 	var _nav = __webpack_require__(5);
 
-	_translate.translator.translate('Bonjour tout le monde !', function () {
-		console.log(_translate.translator.result.text[0]);
-	});
-
-	_game.game.pickWord(function (w) {
-		console.log('Zbraduck');
-	});
+	_game.game.pickWord();
 
 /***/ },
 /* 1 */
@@ -85,13 +79,16 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var $ = __webpack_require__(3);
+	exports.game = undefined;
 
+	var _translate = __webpack_require__(3);
+
+	var $ = __webpack_require__(4);
 	var game = exports.game = {
 		v_requestedWord: new Vue({
 			el: '#requested-word',
 			data: {
-				requestedWord: 'Grandir'
+				requestedWord: 'traduire'
 			}
 		}),
 		v_score: new Vue({
@@ -111,16 +108,83 @@
 
 		setScore: function setScore() {},
 		resetScore: function resetScore() {},
+		setWord: function setWord(w) {
+			var _this = this;
+
+			this.v_requestedWord.requestedWord = w;
+			this.word.requested = w;
+			_translate.translator.translate(w, function () {
+				_this.word.translated = _translate.translator.result.text[0];
+				console.log(_this.word.translated);
+			});
+		},
 		pickWord: function pickWord(callback) {
-			$.get('/words', function (data) {
-				console.log(data);
-				callback(data);
+			var _this2 = this;
+
+			$.get('/word', function (data) {
+				_this2.setWord(data.name);
+				if (callback) callback(data);
 			});
 		}
 	};
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.translator = undefined;
+
+	var _jquery = __webpack_require__(4);
+
+	var $ = _interopRequireWildcard(_jquery);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	console.log('translate start');
+	var translator = exports.translator = {
+		// 'langueDepart-langueArrivé'
+		languagePair: 'fr-en',
+		// clé de connection pour l'api Yandex
+		key: 'trnsl.1.1.20170402T081420Z.2b7b666f5e9db90b.e1e03408d5658285e063dcf21e63166e63122ba0',
+		// url de la requête
+		url: '',
+		// mot encodé à traduire
+		wordEncod: '',
+		// resultat de la requête après traduction
+		result: null,
+
+		translate: function translate(word, callback) {
+			var _this = this;
+
+			// Mot à traduire, il faut l'encoder au format URL
+			this.wordEncod = encodeURIComponent(word);
+
+			// Requête ajax pour la traduction
+			$.ajax({
+				//url de la requête
+				url: 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + this.key + '&text=' + this.wordEncod + '&lang=' + this.languagePair,
+				type: 'GET'
+
+			}).done(function (result) {
+				//Callback de la requête
+				//On récupère le résultat de la requête dans l'attribut result
+				_this.result = result;
+				if (callback) {
+					callback();
+				}
+			});
+		}
+	};
+
+	console.log('translate loaded');
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10379,61 +10443,6 @@
 
 
 /***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.translator = undefined;
-
-	var _jquery = __webpack_require__(3);
-
-	var $ = _interopRequireWildcard(_jquery);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	console.log('translate start');
-	var translator = exports.translator = {
-		// 'langueDepart-langueArrivé'
-		languagePair: 'fr-en',
-		// clé de connection pour l'api Yandex
-		key: 'trnsl.1.1.20170402T081420Z.2b7b666f5e9db90b.e1e03408d5658285e063dcf21e63166e63122ba0',
-		// url de la requête
-		url: '',
-		// mot encodé à traduire
-		wordEncod: '',
-		// resultat de la requête après traduction
-		result: null,
-
-		translate: function translate(word, callback) {
-			var _this = this;
-
-			// Mot à traduire, il faut l'encoder au format URL
-			this.wordEncod = encodeURIComponent(word);
-
-			// Requête ajax pour la traduction
-			$.ajax({
-				//url de la requête
-				url: 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + this.key + '&text=' + this.wordEncod + '&lang=' + this.languagePair,
-				type: 'GET'
-
-			}).done(function (result) {
-				//Callback de la requête
-				//On récupère le résultat de la requête dans l'attribut result
-				_this.result = result;
-				if (callback) {
-					callback();
-				}
-			});
-		}
-	};
-
-	console.log('translate loaded');
-
-/***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -10442,7 +10451,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var $ = __webpack_require__(3);
+	var $ = __webpack_require__(4);
 
 	var nav = exports.nav = $('section').on('click', 'button.nav', function (event) {
 		var target = event.target;

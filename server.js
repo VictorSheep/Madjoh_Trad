@@ -18,12 +18,12 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/words', (req, res) => {
+app.get('/word', (req, res) => {
 	// On génere un id pour selectionner un mot aléatoirement dans la bdd
 	let idRand = Math.round(Math.random()*499);
-	console.log(idRand);
+	/*console.log();*/
 	Word.find({id:idRand}).exec((err, data)=>{
-		console.log(data);
+		res.send(data[0]);
 	})
 });
 
