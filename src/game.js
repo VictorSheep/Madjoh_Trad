@@ -1,7 +1,9 @@
 let $ = require('jquery');
 import {translator} from './translate.js';
+import * as nav from './nav';
 
 export let game = {
+	// Instance Vue.js correspondant au mot francais à traduire
 	v_requestedWord : new Vue({
 		el: '#requested-word',
 		data: {
@@ -9,6 +11,7 @@ export let game = {
 			fontSize: 2
 		}
 	}),
+	// Instance Vue.js correspondant au score
 	v_score : new Vue({
 		el: '#score',
 		data: {
@@ -39,7 +42,7 @@ export let game = {
 
 	init(){
 		let self = this;
-
+		this.getRandWord();
 		// Lorsque l'utilisateur écrit une réponse
 		this.$inputAnswer.on("change paste keyup",(e)=> {
 			this.wordWrittenSize = e.target.value.length;
@@ -55,21 +58,32 @@ export let game = {
 			if($('#game').css('display')=="block"){
 				// à l'appuis sur la touche ENTER
 				if( e.which == 13 ){
+					// la vérification ne s'effectu que si la taille de la réponse
+					// de l'utilisateur est égale à celle de la traduction
 					if(self.isSizeOk()) self.validButton();
 				}
 			}
 		});
 		$('#game').on('click','button#verify',(event)=>{
+			// la vérification ne s'effectu que si la taille de la réponse
+			// de l'utilisateur est égale à celle de la traduction
 			if(this.isSizeOk()) this.validButton();
 		});
 		$('#game-over').on('click','button',(event)=>{
-			$('#win-message').hide();
-			$('#loose-message').hide();
+			nav.hideGameOverMessages();
 		});
 	},
+	/**
+	 * setScore - Attribu une valeur au score
+	 * @param {Number} nb : 	nouvelle valeur du score
+	 */
 	setScore(nb){
 		this.v_score.score = nb;
 	},
+	/**
+	 * addScore - Ajoute une valeur au score
+	 * @param {Number} nb : 	valeur à ajouter
+	 */
 	addScore(nb){
 		this.v_score.score += nb;
 	},
@@ -90,7 +104,7 @@ export let game = {
 		return (this.word.translated==this.word.written)? true : false;
 	},
 	/**
-	 * isTranslationOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
+	 * isSizeOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
 	 * @return {Boolean} true: si la taille et la même, false: si elle est différente
 	 */
 	isSizeOk(){
@@ -120,8 +134,7 @@ export let game = {
 			return;
 		}
 		// On passe à l'écran de fin de jeu
-		$('section').hide();
-		$('#game-over').fadeIn();
+		nav.goTo('game-over');
 		this.setScore(10);
 	},
 	/**

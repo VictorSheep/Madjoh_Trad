@@ -60,13 +60,8 @@
 
 
 	$(document).ready(function () {
-		$('#win-message').hide();
-		$('#loose-message').hide();
-		// on n'affiche que la section home
-		$('section').hide();
-		$('#home').fadeIn();
+		nav.init();
 		_game.game.init();
-		_game.game.getRandWord();
 	});
 
 /***/ },
@@ -83,8 +78,15 @@
 
 	var _translate = __webpack_require__(3);
 
+	var _nav = __webpack_require__(5);
+
+	var nav = _interopRequireWildcard(_nav);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	var $ = __webpack_require__(4);
 	var game = exports.game = {
+		// Instance Vue.js correspondant au mot francais à traduire
 		v_requestedWord: new Vue({
 			el: '#requested-word',
 			data: {
@@ -92,6 +94,7 @@
 				fontSize: 2
 			}
 		}),
+		// Instance Vue.js correspondant au score
 		v_score: new Vue({
 			el: '#score',
 			data: {
@@ -124,7 +127,7 @@
 			var _this = this;
 
 			var self = this;
-
+			this.getRandWord();
 			// Lorsque l'utilisateur écrit une réponse
 			this.$inputAnswer.on("change paste keyup", function (e) {
 				_this.wordWrittenSize = e.target.value.length;
@@ -140,21 +143,34 @@
 				if ($('#game').css('display') == "block") {
 					// à l'appuis sur la touche ENTER
 					if (e.which == 13) {
+						// la vérification ne s'effectu que si la taille de la réponse
+						// de l'utilisateur est égale à celle de la traduction
 						if (self.isSizeOk()) self.validButton();
 					}
 				}
 			});
 			$('#game').on('click', 'button#verify', function (event) {
+				// la vérification ne s'effectu que si la taille de la réponse
+				// de l'utilisateur est égale à celle de la traduction
 				if (_this.isSizeOk()) _this.validButton();
 			});
 			$('#game-over').on('click', 'button', function (event) {
-				$('#win-message').hide();
-				$('#loose-message').hide();
+				nav.hideGameOverMessages();
 			});
 		},
+
+		/**
+	  * setScore - Attribu une valeur au score
+	  * @param {Number} nb : 	nouvelle valeur du score
+	  */
 		setScore: function setScore(nb) {
 			this.v_score.score = nb;
 		},
+
+		/**
+	  * addScore - Ajoute une valeur au score
+	  * @param {Number} nb : 	valeur à ajouter
+	  */
 		addScore: function addScore(nb) {
 			this.v_score.score += nb;
 		},
@@ -176,7 +192,7 @@
 		},
 
 		/**
-	  * isTranslationOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
+	  * isSizeOk - Compare la taille de la réponse avec celle de la traduction retourné par l'API
 	  * @return {Boolean} true: si la taille et la même, false: si elle est différente
 	  */
 		isSizeOk: function isSizeOk() {
@@ -207,8 +223,7 @@
 						return;
 					}
 			// On passe à l'écran de fin de jeu
-			$('section').hide();
-			$('#game-over').fadeIn();
+			nav.goTo('game-over');
 			this.setScore(10);
 		},
 
@@ -10574,14 +10589,31 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.init = init;
+	exports.goTo = goTo;
+	exports.hideGameOverMessages = hideGameOverMessages;
 	var $ = __webpack_require__(4);
 
 	exports.default = $('section').on('click', 'button.nav', function (event) {
 		var target = event.target;
 		var page = $(target).data('target');
-		$('section').hide();
-		$('#' + page).fadeIn();
+		goTo(page);
 	});
+	function init() {
+		// on n'affiche que la section home
+		hideGameOverMessages();
+		goTo('home');
+	};
+
+	function goTo(sectionId) {
+		$('section').hide();
+		$('#' + sectionId).fadeIn();
+	}
+
+	function hideGameOverMessages() {
+		$('#win-message').hide();
+		$('#loose-message').hide();
+	}
 
 /***/ }
 /******/ ]);
