@@ -33,7 +33,7 @@ A la racine du dossier
 ```bash
 
 npm install
-# instale toute les dépendances
+# installe toutes les dépendances
 
 npm run dev
 # lance le serveur et génère le bundle
@@ -66,7 +66,7 @@ Si la condition de fin de jeu est vérifié, `game` demande à `nav` de passer �
 
 - Pour une meilleure traduction: Changer l'API de traduction: L'API *Yandex translate* propose parfois des traductions peu cohérentes. ("allonger" est traduit par "lie")
 - Pour une meilleure experience utilisateur:
-	- Coder un objet toast pour facilement afficher des feedBack plus divers. Celui-ci permettrait d'afficher une div en position absolute avec un message et une couleur souhaitée. (changement du message via Vue.js et animation du toast via JQuery)
+	- Coder un objet toast pour facilement afficher des feedBack plus variés. Celui-ci permettrait d'afficher une div en position absolute avec un message et une couleur souhaitée. (changement du message via Vue.js et animation du toast via JQuery)
 	- Récupérer plusieurs mots de la BDD en une requête pour garder un tableau d'une dizaine mots en local. Si l'utilisateur perd la connexion, il peut continuer à jouer
 	- Aténuer la perte de point: si la réponse du joueur n'a qu'une seule lettre de différence avec 
 - Pour dynamiser le jeu:
