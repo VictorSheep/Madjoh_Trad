@@ -1,6 +1,6 @@
 # Madjoh Trad
 =============
-##Application/Jeu de traduction français/anglais
+## Application/Jeu de traduction français/anglais
 
 *Projet réalisé pour évaluer mes connaissances en javascript (node.js), html, css, utilisation d'api, et ma manière de coder en général*
 Temps éstimé au développement: 28 heures (du 01-04 au 05-04)
@@ -10,9 +10,9 @@ Technologie utilisé:
 - Express.js
 - Mongoose
 
-##Installation / Lancement
+## Installation / Lancement
 
-####Prérequis
+#### Prérequis
 
 l'installation de cette application requière node.js ainsi que webpack.
 Si vous n'avez pas __nodeJS__ vous pouvez le télécharger [ici](https://nodejs.org/en/ "nodeJS")
@@ -25,7 +25,7 @@ npm install webpack -g
 
 ```
 
-####Lancer l'aplication
+#### Lancer l'aplication
 
 A la racine du dossier
 
@@ -40,7 +40,7 @@ npm run dev
 ```
 Puis accédez à l'URL http://localhost:8020/
 
-##Fonctionnement
+## Fonctionnement
 
 - Une base de donné mongoDB est peuplé préalablement depuis un fichier .txt. Ce fichier est lu grâce à *cvs*. La traduction de chaque mots est vérifiée avant leur ajout à la BDD: Si l'API (*Yandex translate*) renvois un mot qui est exactement le même, on considère la traduction comme étant fausse. Si non, le mot s'ajoute à la BDD avec un ID qui s'incrémente. 500 mots sont ajoutés de cette manière.
 
@@ -61,7 +61,7 @@ A chaque validations:
 
 Si la condition de fin de jeu est vérifié, `game` demande à `nav` de passer à l'écran de "game over" et repasse le score à 10 pour la prochaine partie.
 
-##Améliorations
+## Améliorations
 
 - Pour une meilleur traduction: Changer l'API de traduction: L'API *Yandex translate* propose parfois des traductions peu cohérentes. ("allonger" est traduit par "lie")
 - Pour une meilleur experience utilisateur:
