@@ -70,6 +70,6 @@ Si la condition de fin de jeu est vérifié, `game` demande à `nav` de passer �
 	- Récupérer plusieurs mots de la BDD en une requête pour garder un tableau d'une dizaine mots en local. Si l'utilisateur perd la connexion, il peut continuer à jouer
 	- Aténuer la perte de point: si la réponse du joueur n'a qu'une seule lettre de différence avec 
 - Pour dynamiser le jeu:
-	- ajout d'un timer: plus le joueur atteind rapidement les 20 points et plus son score est élevé
-	- ajout d'un visuel de statistique en fin de parti: en stoquant dans une collection "statistic" à chaque fin de partie, le temps mis à atteindre les 20 points. Un message à l'écran de game over pourait être le suivant "Bravo, vous faites parti des XX% à avoir gagné en moins de XX:XX min"
-	- ajout de combo: plus le joueur trouve des traductions conscecutive, plus il gagne de point par traduction
+	- ajout d'un timer: plus le joueur atteint rapidement les 20 points et plus son score est élevé
+	- ajout d'un visuel de statistique en fin de partie: en stoquant dans une collection "statistic" à chaque fin de partie, le temps mis à atteindre les 20 points. Un message à l'écran de game over pourait être le suivant "Bravo, vous faites partie des XX% à avoir gagné en moins de XX:XX min"
+	- ajout de combo: plus le joueur trouve des traductions conscecutives, plus il gagne de point par traduction
