@@ -41,7 +41,7 @@ Puis accédez à l'URL http://localhost:8020/
 
 ## Fonctionnement
 
-- Une base de donné mongoDB est peuplé préalablement depuis un fichier .txt. Ce fichier est lu grâce à *cvs*. La traduction de chaque mots est vérifiée avant leur ajout à la BDD: Si l'API (*Yandex translate*) renvois un mot qui est exactement le même, on considère la traduction comme étant fausse. Si non, le mot s'ajoute à la BDD avec un ID qui s'incrémente. 500 mots sont ajoutés de cette manière.
+Une base de donné mongoDB est peuplé préalablement depuis un fichier .txt. Ce fichier est lu grâce à *cvs*. La traduction de chaque mots est vérifiée avant leur ajout à la BDD: Si l'API (*Yandex translate*) renvois un mot qui est exactement le même, on considère la traduction comme étant fausse. Si non, le mot s'ajoute à la BDD avec un ID qui s'incrémente. 500 mots sont ajoutés de cette manière.
 
 Au lancement de l'application, on lance les méthode init() des objet `nav` et `game`
 
