@@ -5,7 +5,7 @@
 
 Temps éstimé au développement: 28 heures (du 01-04 au 05-04)
 
-Technologie utilisé:
+Technologies utilisées:
 - Vue.js
 - JQuery
 - Express.js
