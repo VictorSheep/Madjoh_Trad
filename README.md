@@ -1,7 +1,7 @@
 #Madjoh Trad
 ##Application/Jeu de traduction français/anglais
 
-*Projet réalisé pour testé mes connaissance en javascript (node.js), html, css, l'utilisation d'api, et ma manière de coder de manière général*
+*Projet réalisé pour évaluer mes connaissance en javascript (node.js), html, css, utilisation d'api, et ma manière de coder en général*
 Temps éstimé au développement: 28 heures (du 01-04 au 05-04)
 Technologie utilisé:
 - Vue.js
