@@ -192,6 +192,9 @@
 		addScore: function addScore(nb) {
 			this.v_score.score += nb;
 		},
+
+
+		/* Methode lancé lorsque l'utilisateur valide sa traduction */
 		validButton: function validButton() {
 			this.$toast.stop().animate({ opacity: 0 }, 100);
 			this.word.written = this.$inputAnswer[0].value;
@@ -251,6 +254,12 @@
 				});
 			}
 		},
+
+
+		/**
+	  * gameOver - Vérifie si le joueur à gagné ou perdu, affiche le message correspondant
+	  *            puis renvois à l'écran de game-over
+	  */
 		gameOver: function gameOver() {
 			// Si on a 20 pts ou plus c'est gagné
 			if (this.v_score.score >= 20) {
